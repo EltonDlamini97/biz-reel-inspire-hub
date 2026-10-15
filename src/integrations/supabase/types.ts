@@ -14,16 +14,258 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      articles: {
+        Row: {
+          author_id: string | null
+          body: string
+          created_at: string
+          id: string
+          kind: string
+          published: boolean
+          summary: string
+          title: string
+        }
+        Insert: {
+          author_id?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          published?: boolean
+          summary?: string
+          title: string
+        }
+        Update: {
+          author_id?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          published?: boolean
+          summary?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      businesses: {
+        Row: {
+          category: string
+          city: string
+          created_at: string
+          description: string
+          email: string | null
+          featured: boolean
+          id: string
+          name: string
+          owner_id: string | null
+          phone: string | null
+          province: string
+          services: string
+          status: string
+          verified: boolean
+          website: string | null
+        }
+        Insert: {
+          category: string
+          city?: string
+          created_at?: string
+          description?: string
+          email?: string | null
+          featured?: boolean
+          id?: string
+          name: string
+          owner_id?: string | null
+          phone?: string | null
+          province?: string
+          services?: string
+          status?: string
+          verified?: boolean
+          website?: string | null
+        }
+        Update: {
+          category?: string
+          city?: string
+          created_at?: string
+          description?: string
+          email?: string | null
+          featured?: boolean
+          id?: string
+          name?: string
+          owner_id?: string | null
+          phone?: string | null
+          province?: string
+          services?: string
+          status?: string
+          verified?: boolean
+          website?: string | null
+        }
+        Relationships: []
+      }
+      challenges: {
+        Row: {
+          created_at: string
+          description: string
+          id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description: string
+          id?: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      enquiries: {
+        Row: {
+          business_id: string
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          sender_id: string
+        }
+        Insert: {
+          business_id: string
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          sender_id: string
+        }
+        Update: {
+          business_id?: string
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "enquiries_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+          popia_consent_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id: string
+          popia_consent_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          popia_consent_at?: string | null
+        }
+        Relationships: []
+      }
+      quotes: {
+        Row: {
+          author: string
+          created_at: string
+          id: string
+          status: string
+          submitted_by: string | null
+          text: string
+        }
+        Insert: {
+          author?: string
+          created_at?: string
+          id?: string
+          status?: string
+          submitted_by?: string | null
+          text: string
+        }
+        Update: {
+          author?: string
+          created_at?: string
+          id?: string
+          status?: string
+          submitted_by?: string | null
+          text?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      watchlist: {
+        Row: {
+          created_at: string
+          id: string
+          movie_id: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          movie_id: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          movie_id?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "user" | "business_owner" | "editor" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +392,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["user", "business_owner", "editor", "admin"],
+    },
   },
 } as const
