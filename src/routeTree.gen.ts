@@ -10,8 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BusinessNewRouteImport } from './routes/business-new'
 import { Route as MotivationRouteImport } from './routes/motivation'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as BusinessesIndexRouteImport } from './routes/businesses.index'
 import { Route as BusinessesIdRouteImport } from './routes/businesses.$id'
 import { Route as MoviesIndexRouteImport } from './routes/movies.index'
@@ -22,15 +27,39 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessNewRoute = BusinessNewRouteImport.update({
+  id: '/business-new',
+  path: '/business-new',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MotivationRoute = MotivationRouteImport.update({
   id: '/motivation',
   path: '/motivation',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const BusinessesIndexRoute = BusinessesIndexRouteImport.update({
   id: '/businesses/',
@@ -56,7 +85,11 @@ const MoviesIdRoute = MoviesIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/business-new': typeof BusinessNewRoute
   '/motivation': typeof MotivationRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
   '/businesses/$id': typeof BusinessesIdRoute
   '/movies/$id': typeof MoviesIdRoute
   '/businesses/': typeof BusinessesIndexRoute
@@ -65,7 +98,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/business-new': typeof BusinessNewRoute
   '/motivation': typeof MotivationRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
   '/businesses/$id': typeof BusinessesIdRoute
   '/movies/$id': typeof MoviesIdRoute
   '/businesses': typeof BusinessesIndexRoute
@@ -74,8 +111,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/business-new': typeof BusinessNewRoute
   '/motivation': typeof MotivationRoute
+  '/privacy': typeof PrivacyRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/businesses/$id': typeof BusinessesIdRoute
   '/movies/$id': typeof MoviesIdRoute
   '/businesses/': typeof BusinessesIndexRoute
@@ -86,7 +128,11 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/business-new'
     | '/motivation'
+    | '/privacy'
+    | '/reset-password'
+    | '/dashboard'
     | '/businesses/$id'
     | '/movies/$id'
     | '/businesses/'
@@ -95,7 +141,11 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/business-new'
     | '/motivation'
+    | '/privacy'
+    | '/reset-password'
+    | '/dashboard'
     | '/businesses/$id'
     | '/movies/$id'
     | '/businesses'
@@ -103,8 +153,13 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/auth'
+    | '/business-new'
     | '/motivation'
+    | '/privacy'
+    | '/reset-password'
+    | '/_authenticated/dashboard'
     | '/businesses/$id'
     | '/movies/$id'
     | '/businesses/'
@@ -113,8 +168,12 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  BusinessNewRoute: typeof BusinessNewRoute
   MotivationRoute: typeof MotivationRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   BusinessesIdRoute: typeof BusinessesIdRoute
   MoviesIdRoute: typeof MoviesIdRoute
   BusinessesIndexRoute: typeof BusinessesIndexRoute
@@ -130,11 +189,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/business-new': {
+      id: '/business-new'
+      path: '/business-new'
+      fullPath: '/business-new'
+      preLoaderRoute: typeof BusinessNewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/motivation': {
@@ -143,6 +216,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/motivation'
       preLoaderRoute: typeof MotivationRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/businesses/': {
       id: '/businesses/'
@@ -175,10 +269,25 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  BusinessNewRoute: BusinessNewRoute,
   MotivationRoute: MotivationRoute,
+  PrivacyRoute: PrivacyRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   BusinessesIdRoute: BusinessesIdRoute,
   MoviesIdRoute: MoviesIdRoute,
   BusinessesIndexRoute: BusinessesIndexRoute,
